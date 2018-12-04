@@ -57,7 +57,5 @@ namespace MyGame
                 buttons[buttonIndex].SetActive();
             }
         }
-
-        //Just for test
     }
 }
