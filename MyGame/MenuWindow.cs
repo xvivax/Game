@@ -57,5 +57,10 @@ namespace MyGame
                 buttons[buttonIndex].SetActive();
             }
         }
+
+        public int GetButtonIndex()
+        {
+            return buttonIndex;
+        }
     }
 }
