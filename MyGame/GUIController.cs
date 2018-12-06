@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace MyGame
 {
     public class GUIController
     {
         private MenuWindow menuWindow;
-        private bool needToRender = true;
+        public bool needToRender = true;
         private CreditWindow creditWindow;
         private GameController gameController;
 
@@ -38,7 +39,6 @@ namespace MyGame
                         switch (menuWindow.GetButtonIndex())
                         {
                             case 0:
-                                needToRender = false;
                                 gameController.StartGame();
                                 break;
                             case 1:
@@ -78,7 +78,5 @@ namespace MyGame
 
             } while (needToRender);
         }
-
-
     }
 }

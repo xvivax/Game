@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Dynamic;
 using MyGame.Units;
 
 namespace MyGame
@@ -10,6 +11,7 @@ namespace MyGame
 
         private Hero hero;
         private List<Enemy> enemies;
+        private Window gameScreenwindow;
 
         public GameScreen(int width, int height)
         {
@@ -17,6 +19,7 @@ namespace MyGame
             this.height = height;
 
             enemies = new List<Enemy>();
+            gameScreenwindow = new Window(0, 0, width, height, '@');
         }
 
         public void SetHero(Hero hero)
@@ -58,11 +61,12 @@ namespace MyGame
 
         public void Render()
         {
-            hero.PrintInfo();
+            gameScreenwindow.Render();
+            hero.Render();
 
             foreach (Enemy enemy in enemies)
             {
-                enemy.PrintInfo();
+                enemy.Render();
             }
         }
     }

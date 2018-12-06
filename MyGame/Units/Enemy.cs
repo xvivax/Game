@@ -35,5 +35,11 @@ namespace MyGame.Units
         {
             return id;
         }
+
+        public void Render()
+        {
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine("-");
+        }
     }
 }
