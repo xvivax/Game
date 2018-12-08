@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Dynamic;
 using MyGame.Units;
 
@@ -12,6 +14,11 @@ namespace MyGame
         private Hero hero;
         private List<Enemy> enemies;
         private Window gameScreenwindow;
+
+        // Speed for all enemies
+        private float enemiesSpeed = 1.5f;
+        private long currentTime = 0;
+        private long previousTime = 0;
 
         public GameScreen(int width, int height)
         {
@@ -63,6 +70,15 @@ namespace MyGame
         {
             gameScreenwindow.Render();
             hero.Render();
+
+            currentTime = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
+            float elapsedTime = currentTime - previousTime;
+
+            if ( elapsedTime > enemiesSpeed)
+            {
+                MoveAllEnemiesDown();
+                previousTime = currentTime;
+            }
 
             foreach (Enemy enemy in enemies)
             {

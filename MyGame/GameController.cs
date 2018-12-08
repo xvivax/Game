@@ -17,7 +17,7 @@ namespace MyGame
             Random rnd = new Random();
             for (int i = 0; i < 100; i++)
             {
-                myGame.AddEnemy(new Enemy(i, "Barsukas", rnd.Next(1, SCREEN_WIDTH - 1), rnd.Next(1, 10)));
+                myGame.AddEnemy(new Enemy(i, "Barsukas", rnd.Next(1, SCREEN_WIDTH - 1), rnd.Next(0, 10)));
             }
             //myGame.Render();
 
@@ -57,6 +57,7 @@ namespace MyGame
                 }
 
                 myGame.Render();
+                Console.SetCursorPosition(0,0);
                 System.Threading.Thread.Sleep(500);
             } while (needToRender);
         }
