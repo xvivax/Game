@@ -41,5 +41,15 @@ namespace MyGame.Units
             Console.SetCursorPosition(x, y);
             Console.WriteLine("-");
         }
+
+        public int GetX()
+        {
+            return x;
+        }
+
+        public int GetY()
+        {
+            return y;
+        }
     }
 }

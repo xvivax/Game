@@ -57,6 +57,7 @@
     <Compile Include="Units\Bullet.cs" />
     <Compile Include="Units\Enemy.cs" />
     <Compile Include="Units\Hero.cs" />
+    <Compile Include="Units\Lives.cs" />
     <Compile Include="Units\Unit.cs" />
     <Compile Include="Window.cs" />
   </ItemGroup>

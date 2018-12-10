@@ -20,9 +20,15 @@ namespace MyGame.Units
             y--;
         }
 
+        public int GetX()
+        {
+            return x;
+        }
+
         public int GetY()
         {
             return y;
         }
+
     }
 }

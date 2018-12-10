@@ -8,6 +8,7 @@ namespace MyGame
     {
         private int SCREEN_WIDTH = 40;
         private int SCREEN_HEIGHT = 20;
+
         public void StartGame()
         {
             GameScreen myGame = new GameScreen(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -15,7 +16,7 @@ namespace MyGame
             myGame.SetHero(new Hero("SuperMan", 20, 15));
 
             Random rnd = new Random();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 15; i++)
             {
                 myGame.AddEnemy(new Enemy(i, "Barsukas", rnd.Next(1, SCREEN_WIDTH - 1), rnd.Next(0, 5)));
             }
@@ -61,7 +62,7 @@ namespace MyGame
 
                 myGame.Render();
                 Console.SetCursorPosition(0,0);
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(100);
             } while (needToRender);
         }
     }

@@ -10,7 +10,9 @@ namespace MyGame
     {
         private int width;
         private int height;
+        private int LIVES = 3;
 
+        private Lives lives;
         private Hero hero;
         private List<Enemy> enemies;
         private Window gameScreenwindow;
@@ -22,7 +24,7 @@ namespace MyGame
         private long previousTime = 0;
 
         // Speed for all bullets
-        private float bulletsSpeed = 1.5f;
+        private float bulletsSpeed = 0.5f;
         private long currentTime2 = 0;
         private long previousTime2 = 0;
 
@@ -31,9 +33,11 @@ namespace MyGame
             this.width = width;
             this.height = height;
 
+            lives = new Lives(width + 3, 1, 10, "Liko gyvybiu: " + LIVES);
             enemies = new List<Enemy>();
             gameScreenwindow = new Window(0, 0, width, height, '@');
             bullets = new List<Bullet>();
+
         }
 
         public void SetHero(Hero hero)
@@ -75,7 +79,7 @@ namespace MyGame
             {
                 if (enemy.GetID() == id)
                 {
-                    enemy.MoveDown();
+                    //enemy.MoveDown();
                     return enemy;
                 }
             }
@@ -85,6 +89,7 @@ namespace MyGame
 
         public void Render()
         {
+            lives.Render();
             gameScreenwindow.Render();
             hero.Render();
 
@@ -117,6 +122,17 @@ namespace MyGame
                         {
                             RemoveBullet(bullets[i]);
                         }
+
+                        for (int j = 0; j < enemies.Count; j++)
+                        {
+                            if (bullets[i].GetX() == enemies[j].GetX() && bullets[i].GetY() == enemies[j].GetY())
+                            {
+                                //enemies.Remove(enemies[j]);
+                                enemies.Remove(GetEnemyByID(j));
+                                RemoveBullet(bullets[i]);
+                            }
+                        }
+
                         previousTime2 = currentTime2;
                     }                 
                 }
