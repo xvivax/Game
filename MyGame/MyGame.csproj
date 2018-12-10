@@ -54,6 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextBlock.cs" />
     <Compile Include="TextLine.cs" />
+    <Compile Include="Units\Bullet.cs" />
     <Compile Include="Units\Enemy.cs" />
     <Compile Include="Units\Hero.cs" />
     <Compile Include="Units\Unit.cs" />

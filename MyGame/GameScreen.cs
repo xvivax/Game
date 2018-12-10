@@ -14,11 +14,17 @@ namespace MyGame
         private Hero hero;
         private List<Enemy> enemies;
         private Window gameScreenwindow;
+        private List<Bullet> bullets;
 
         // Speed for all enemies
-        private float enemiesSpeed = 1.5f;
+        private float enemiesSpeed = 5.5f;
         private long currentTime = 0;
         private long previousTime = 0;
+
+        // Speed for all bullets
+        private float bulletsSpeed = 1.5f;
+        private long currentTime2 = 0;
+        private long previousTime2 = 0;
 
         public GameScreen(int width, int height)
         {
@@ -27,6 +33,7 @@ namespace MyGame
 
             enemies = new List<Enemy>();
             gameScreenwindow = new Window(0, 0, width, height, '@');
+            bullets = new List<Bullet>();
         }
 
         public void SetHero(Hero hero)
@@ -50,6 +57,16 @@ namespace MyGame
             {
                 enemy.MoveDown();
             }
+        }
+
+        public void AddBullet(Bullet bullet)
+        {
+            bullets.Add(bullet);
+        }
+
+        public void RemoveBullet(Bullet bullet)
+        {
+            bullets.Remove(bullet);
         }
 
         public Enemy GetEnemyByID(int id)
@@ -83,6 +100,34 @@ namespace MyGame
             foreach (Enemy enemy in enemies)
             {
                 enemy.Render();
+            }
+
+            currentTime2 = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
+            float elapsedTime2 = currentTime2 - previousTime2;
+
+            if (bullets != null)
+            {
+                if (elapsedTime2 > bulletsSpeed)
+                {
+                    for (int i = 0; i < bullets.Count; i++)
+                    {
+                        bullets[i].Move();
+
+                        if (bullets[i].GetY() < 1)
+                        {
+                            RemoveBullet(bullets[i]);
+                        }
+                        previousTime2 = currentTime2;
+                    }                 
+                }
+            }
+
+            if (bullets != null)
+            {
+                foreach (Bullet bullet in bullets)
+                {
+                    bullet.Render();
+                }
             }
         }
     }
