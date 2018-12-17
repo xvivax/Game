@@ -13,7 +13,7 @@ namespace MyGame
         {
             GameScreen myGame = new GameScreen(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-            myGame.SetHero(new Hero("SuperMan", 20, 15));
+            myGame.SetHero(new Hero("SuperMan", 20, 10));
 
             Random rnd = new Random();
             for (int i = 0; i < 15; i++)

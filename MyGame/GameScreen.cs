@@ -10,16 +10,16 @@ namespace MyGame
     {
         private int width;
         private int height;
-        private int LIVES = 3;
+        public static int LIVES = 100;
 
         private Lives lives;
         private Hero hero;
         private List<Enemy> enemies;
-        private Window gameScreenwindow;
+        private Window gameScreenWindow;
         private List<Bullet> bullets;
 
         // Speed for all enemies
-        private float enemiesSpeed = 5.5f;
+        private float enemiesSpeed = 10f;
         private long currentTime = 0;
         private long previousTime = 0;
 
@@ -35,9 +35,69 @@ namespace MyGame
 
             lives = new Lives(width + 3, 1, 10, "Liko gyvybiu: " + LIVES);
             enemies = new List<Enemy>();
-            gameScreenwindow = new Window(0, 0, width, height, '@');
+            gameScreenWindow = new Window(0, 0, width, height, '@');
             bullets = new List<Bullet>();
 
+        }
+
+        private void RenderEnemies()
+        {
+            currentTime = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
+            float elapsedTime = currentTime - previousTime;
+
+            if (elapsedTime > enemiesSpeed)
+            {
+                MoveAllEnemiesDown();
+                previousTime = currentTime;
+            }
+
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Render();
+            }
+        }
+
+        private void RenderBullets()
+        {
+            currentTime2 = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
+            float elapsedTime2 = currentTime2 - previousTime2;
+
+            if (bullets != null)
+            {
+                if (elapsedTime2 > bulletsSpeed)
+                {
+                    for (int i = 0; i < bullets.Count; i++)
+                    {
+                        bullets[i].Move();
+
+                        if (bullets[i].GetY() < 1)
+                        {
+                            RemoveBullet(bullets[i]);
+                        }
+
+                        for (int j = 0; j < enemies.Count; j++)
+                        {
+                            //TODO BUG: OUT of range
+                            if (bullets[i].GetX() == enemies[j].GetX() && bullets[i].GetY() == enemies[j].GetY())
+                            {
+                                //enemies.Remove(enemies[j]);
+                                enemies.Remove(GetEnemyByID(j));
+                                RemoveBullet(bullets[i]);
+                            }
+                        }
+
+                        previousTime2 = currentTime2;
+                    }
+                }
+            }
+
+            if (bullets != null)
+            {
+                foreach (Bullet bullet in bullets)
+                {
+                    bullet.Render();
+                }
+            }
         }
 
         public void SetHero(Hero hero)
@@ -90,61 +150,12 @@ namespace MyGame
         public void Render()
         {
             lives.Render();
-            gameScreenwindow.Render();
+            gameScreenWindow.Render();
             hero.Render();
 
-            currentTime = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
-            float elapsedTime = currentTime - previousTime;
+            RenderEnemies();
+            RenderBullets();
 
-            if ( elapsedTime > enemiesSpeed)
-            {
-                MoveAllEnemiesDown();
-                previousTime = currentTime;
-            }
-
-            foreach (Enemy enemy in enemies)
-            {
-                enemy.Render();
-            }
-
-            currentTime2 = Stopwatch.GetTimestamp() / Stopwatch.Frequency;
-            float elapsedTime2 = currentTime2 - previousTime2;
-
-            if (bullets != null)
-            {
-                if (elapsedTime2 > bulletsSpeed)
-                {
-                    for (int i = 0; i < bullets.Count; i++)
-                    {
-                        bullets[i].Move();
-
-                        if (bullets[i].GetY() < 1)
-                        {
-                            RemoveBullet(bullets[i]);
-                        }
-
-                        for (int j = 0; j < enemies.Count; j++)
-                        {
-                            if (bullets[i].GetX() == enemies[j].GetX() && bullets[i].GetY() == enemies[j].GetY())
-                            {
-                                //enemies.Remove(enemies[j]);
-                                enemies.Remove(GetEnemyByID(j));
-                                RemoveBullet(bullets[i]);
-                            }
-                        }
-
-                        previousTime2 = currentTime2;
-                    }                 
-                }
-            }
-
-            if (bullets != null)
-            {
-                foreach (Bullet bullet in bullets)
-                {
-                    bullet.Render();
-                }
-            }
         }
     }
 }
